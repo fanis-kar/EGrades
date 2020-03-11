@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EGrades.Models.Grade>
+
+@{
+    ViewData["Title"] = "Λίστα όλων των βαθμολογιών";
+    Layout = "~/Areas/Secretary/Views/Shared/_SecretaryLayout.cshtml";
+}
+
+<h1>Λίστα όλων των βαθμολογιών</h1>
+
+<hr />
+
+<div class="table-responsive">
+    <table id="grades-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Enrollment.Student.FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Course.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Value)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ExamPeriod.Period)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Student" asp-action="Details" asp-route-id="@item.Enrollment.Student.Id">@Html.DisplayFor(modelItem => item.Enrollment.Student.FullName)</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Course.Id">@Html.DisplayFor(modelItem => item.Course.Title)</a>
+                    </td>
+                    <td>
+                        @if (item.Value == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @if (item.ExamPeriodId == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.ExamPeriod.Period)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Διεκπεραίωση</a> |
+                        <a href="Grade/PieChart?courseId=@item.CourseId&examperiodId=@item.ExamPeriodId">Στατιστικά</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Επιτυχία!</strong> @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Σφάλμα!</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#grades-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

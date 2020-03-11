@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EGrades.Models.Student>
+
+@{
+    ViewData["Title"] = "Λίστα Φοιτητών";
+}
+
+<h1>Λίστα Φοιτητών</h1>
+
+<hr />
+
+<div class="table-responsive">
+    <table id="students-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().RegistrationNumber)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Semester)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Direction)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direction.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Λεπτομέριες</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Σφάλμα!</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#students-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

@@ -1,0 +1,116 @@
+﻿@model EGrades.Models.ViewModels.StudentDetailsViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>Στοιχεία Φοιτητή</h1>
+
+<hr />
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.RegistrationNumber"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.RegistrationNumber" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.FullName"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.FullName" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.FatherName"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.FatherName" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Semester"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.Semester" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Direction"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Direction.Name" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.MotherName"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.MotherName" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Gender"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.Gender" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Address"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.Address" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.BirthDate"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.BirthDate" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.EnrollmentDate"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.EnrollmentDate" disabled class="form-control" />
+    </div>
+</div>
+
+@{
+    if (Model.Enrollments.Count() > 0)
+    {
+        <hr />
+        <h3>Δηλώσεις μαθημάτων:</h3>
+
+        foreach (var enrollment in Model.Enrollments)
+        {
+            <p>
+                Δήλωση: <a asp-controller="Enrollment" asp-action="Details" asp-route-id="@enrollment.Id">@enrollment.AcademicPeriod.Period</a>
+            </p>
+        }
+    }
+}
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>

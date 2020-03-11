@@ -1,0 +1,38 @@
+﻿@model EGrades.Models.ViewModels.RequestCertificateFormViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Certificate" asp-action="Save">
+
+            <div class="form-group">
+                <label asp-for="Certificate" class="control-label"></label>
+                <select asp-for="Certificate" asp-items="Model.CertificateList" class="form-control"></select>
+            </div>
+
+            @Html.HiddenFor(s => s.Student.Id)
+
+            <div class="form-group">
+                <input type="submit" value="Καταχώρηση" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_FormLayout");
+    }
+}

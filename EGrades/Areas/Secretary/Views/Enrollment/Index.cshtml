@@ -1,0 +1,81 @@
+﻿@model IEnumerable<EGrades.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Λίστα Δηλώσεων";
+}
+
+<h1>Λίστα Δηλώσεων</h1>
+
+<hr />
+
+<p>
+    @Html.ActionLink("Άνοιγμα Δηλώσεων", "Index", "AcademicPeriod", null, new { @class = "btn btn-primary" })
+</p>
+
+<div class="table-responsive">
+    <table id="enrollments-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Id)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Student.FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().AcademicPeriod.Period)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        <a asp-controller="Student" asp-action="Details" asp-route-id="@item.StudentId">@Html.DisplayFor(modelItem => item.Student.FullName)</a>
+                    </td>
+                    <td>
+                        <a asp-controller="AcademicPeriod" asp-action="Enrollments" asp-route-id="@item.AcademicPeriodId">@Html.DisplayFor(modelItem => item.AcademicPeriod.Period)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Λεπτομέριες</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Επιτυχία!</strong> @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Σφάλμα!</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#enrollments-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

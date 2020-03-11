@@ -1,0 +1,97 @@
+﻿@model EGrades.Models.ViewModels.EnrollmentFormViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-controller="Enrollment" asp-action="Save">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @Html.HiddenFor(e => e.Student.Id)
+            @Html.HiddenFor(z => z.AcademicPeriod.Id)
+
+            <div class="table-responsive">
+                <table id="courses-list-table" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Course.Title)</th>
+                            <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Course.Semester)</th>
+                            <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Course.Type)</th>
+                            <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Course.Direction)</th>
+                            <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Course.TotalHours)</th>
+                            <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Course.Ects)</th>
+                            <th class="text-center">Ενέργειες</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Courses.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-controller="Course" asp-action="Details" asp-route-id="@Model.Courses[i].Course.Id">
+                                        @Html.DisplayFor(modelItem => modelItem.Courses[i].Course.Title)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => modelItem.Courses[i].Course.Semester)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => modelItem.Courses[i].Course.Type)
+                                </td>
+                                <td>
+                                    <a asp-controller="Direction" asp-action="Courses" asp-route-id="@Model.Courses[i].Course.Direction.Id">
+                                        @Html.DisplayFor(modelItem => modelItem.Courses[i].Course.Direction.Name)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => modelItem.Courses[i].Course.TotalHours)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => modelItem.Courses[i].Course.Ects)
+                                </td>
+                                <td class="text-center">
+                                    @Html.HiddenFor(modelItem => modelItem.Courses[i].Course.Id)
+                                    @Html.CheckBoxFor(modelItem => modelItem.Courses[i].Checked)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @Html.HiddenFor(e => e.Id)
+
+            <div class="form-group">
+                <input type="submit" value="Καταχώρηση" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_FormLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('tr').click(function (event) {
+                    if (event.target.type !== 'checkbox') {
+                        $(':checkbox', this).trigger('click');
+                    }
+                });
+            });
+        </script>
+    }
+}

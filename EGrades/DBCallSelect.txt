@@ -1,0 +1,35 @@
+﻿List<Student> students = new List<Student>();
+
+string connectionString = "Data Source=195.201.194.248;Initial Catalog=DBName;Persist Security Info=True;User ID=faniskar;Password=******";
+using (SqlConnection connection = new SqlConnection(connectionString))
+{
+    connection.Open();
+    string query = "SELECT * FROM Student";
+
+    using (SqlCommand command = new SqlCommand(query, connection))
+    {
+        using (SqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                Student tmpStudent = new Student();
+
+                tmpStudent.Id = (Guid)reader["Id"];
+                tmpUser.Name = (String)reader["Name"];
+
+                students.Add(tmpStudent);
+            }
+        }
+    }
+}
+
+
+// ----------------------------------------------------------------------------- //
+
+private readonly ApplicationDbContext _context;
+
+students = _context.Students.ToList();
+
+// ----------------------------------------------------------------------------- //
+
+(LocalDB)\MSSQLLocalDB

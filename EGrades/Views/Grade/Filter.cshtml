@@ -1,0 +1,91 @@
+﻿@model IEnumerable<EGrades.Models.Grade>
+
+@{
+    ViewData["Title"] = "Τα περασμένα μαθήματα μου";
+}
+
+<h1>Τα περασμένα μαθήματα μου</h1>
+
+<hr />
+
+<p>
+    @Html.ActionLink("Όλες οι προσπάθειες", "Index", "Grade", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Παίρνω Δίπλωμα;", "Degree", "Grade", null, new { @class = "btn btn-primary" })
+</p>
+
+<div class="table-responsive">
+    <table id="grades-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Course.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Value)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ExamPeriod.Period)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ExamDate)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().EntryDate)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Course.Id">@Html.DisplayFor(modelItem => item.Course.Title)</a>
+                    </td>
+                    <td>
+                        @if (item.IsPending)
+                        {
+                            @:----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @if (item.IsPending)
+                        {
+                            @:----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.ExamPeriod.Period)
+                    </td>
+                    <td>
+                        @if (item.IsPending)
+                        {
+                            @:----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.ExamDate)
+                    </td>
+                    <td>
+                        @if (item.IsPending)
+                        {
+                            @:----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.EntryDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#grades-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

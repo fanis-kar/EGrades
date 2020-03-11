@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Αρχική Σελίδα";
+}
+
+<h1>Φοιτητολόγιο</h1>
+<h2>Καλώς Ήλθατε!</h2>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_CookieConsentPartial");
+    }
+}

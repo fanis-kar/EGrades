@@ -1,0 +1,108 @@
+﻿@model EGrades.Models.ViewModels.CourseDetailsViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>Στοιχεία μαθήματος</h1>
+
+<hr />
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.Title"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.Title" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.Type"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.Type" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.Semester"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.Semester" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.Direction"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Direction.Name" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.TotalHours"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.TotalHours" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.TheoryHours"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.TheoryHours" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.ExerciseHours"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.ExerciseHours" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.LabHours"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.LabHours" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Course.Ects"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Course.Ects" disabled class="form-control" />
+    </div>
+</div>
+
+@{
+    if (Model.Instructors.Count() > 0)
+    {
+        <hr />
+        <h3>Διδάσκοντες:</h3>
+
+        foreach (var course in Model.Instructors)
+        {
+            <a asp-controller="Instructor" asp-action="Details" asp-route-id="@course.Instructor.Id">@course.Instructor.FullName</a>
+            <br />
+        }
+    }
+}
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>

@@ -1,0 +1,65 @@
+﻿@model EGrades.Models.ViewModels.DirectionStudentsViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>@Model.Title</h1>
+
+<hr />
+
+<a asp-controller="Direction" asp-action="Courses" asp-route-id="@Model.Direction.Id">Λίστα Μαθημάτων</a>
+
+<hr />
+
+<div class="table-responsive">
+    <table id="students-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Students.FirstOrDefault().RegistrationNumber)</th>
+                <th>@Html.DisplayNameFor(model => model.Students.FirstOrDefault().FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.Students.FirstOrDefault().Semester)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester)
+                    </td>
+                    <td>
+                        <a asp-controller="Student" asp-action="Details" asp-route-id="@item.Id">Λεπτομέριες</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#students-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

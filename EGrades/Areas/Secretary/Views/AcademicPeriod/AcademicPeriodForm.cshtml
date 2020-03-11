@@ -1,0 +1,79 @@
+﻿@model EGrades.Models.ViewModels.AcademicPeriodFormViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+    Layout = "~/Areas/Secretary/Views/Shared/_SecretaryLayout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="AcademicPeriod" asp-action="Save">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Semester" class="control-label"></label>
+                <select asp-for="Semester" asp-items="Model.SemesterList" class="form-control"></select>
+                <span asp-validation-for="Semester" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Current" class="control-label"></label>
+                <select asp-for="Current" asp-items="Model.CurrentList" class="form-control"></select>
+                <span asp-validation-for="Current" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OpenEnrollment" class="control-label"></label>
+                <select asp-for="OpenEnrollment" asp-items="Model.OpenEnrollmentList" class="form-control"></select>
+                <span asp-validation-for="OpenEnrollment" class="text-danger"></span>
+            </div>
+            @Html.HiddenFor(ap => ap.Id)
+            <div class="form-group">
+                <input type="submit" value="Καταχώρηση" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_FormLayout");
+
+        <script>
+        $(document).ready( function () {
+		    $("#StartDate").datetimepicker(
+		    {
+			    locale: "el",
+			    format: "d-m-Y"
+            });
+
+		    $("#EndDate").datetimepicker(
+		    {
+			    locale: "el",
+			    format: "d-m-Y"
+		    });
+        } );
+        </script>
+    }
+}

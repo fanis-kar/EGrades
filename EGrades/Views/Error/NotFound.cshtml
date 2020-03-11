@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = @ViewBag.Title;
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<hr />
+
+<p>
+    @ViewBag.ErrorMessage
+</p>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<EGrades.Models.AcademicPeriod>
+@{
+    ViewData["Title"] = "Λίστα Ακαδημαϊκών Περιόδων";
+}
+
+<h1>Λίστα Ακ. Περιόδων</h1>
+
+<hr />
+
+<p>
+    @Html.ActionLink("Νέα Ακ. Περίοδος", "Create", "AcademicPeriod", null, new { @class = "btn btn-primary" })
+</p>
+
+<div class="table-responsive">
+    <table id="academicperiods-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(ap => ap.Period)</th>
+                <th>@Html.DisplayNameFor(ap => ap.StartDate)</th>
+                <th>@Html.DisplayNameFor(ap => ap.EndDate)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Period)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Ενημέρωση</a> |
+                        <a asp-action="Enrollments" asp-route-id="@item.Id">Δηλώσεις</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Επιτυχία!</strong> @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Σφάλμα!</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#academicperiods-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

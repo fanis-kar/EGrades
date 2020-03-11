@@ -1,0 +1,74 @@
+﻿@model IEnumerable<EGrades.Models.Course>
+
+@{
+    ViewData["Title"] = "Λίστα Μαθημάτων";
+}
+
+<h1>Λίστα Μαθημάτων</h1>
+
+<hr />
+
+<div class="table-responsive">
+    <table id="courses-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Title)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Direction)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Semester)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Ects)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <a asp-controller="Direction" asp-action="Courses" asp-route-id="@item.DirectionId">@Html.DisplayFor(modelItem => item.Direction.Name)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ects)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Λεπτομέριες</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Σφάλμα!</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#courses-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

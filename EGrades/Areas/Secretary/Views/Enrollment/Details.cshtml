@@ -1,0 +1,101 @@
+﻿
+@model EGrades.Models.ViewModels.EnrollmentDetailsViewModel
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>Στοιχεία Δήλωσης</h1>
+
+<hr />
+
+<p>
+    <strong>Φοιτητής:</strong> <a asp-controller="Student" asp-action="Details" asp-route-id="@Model.Student.Id">@Model.Student.FullName (@Model.Student.RegistrationNumber)</a><br />
+    <strong>Ακαδημαϊκή Περίοδος:</strong> <a asp-controller="AcademicPeriod" asp-action="Details" asp-route-id="@Model.AcademicPeriod.Id">@Model.AcademicPeriod.Period</a>
+</p>
+
+<hr />
+
+<div class="table-responsive">
+    <table id="grades-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Grades.First().Course.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Grades.First().Value)</th>
+                <th>@Html.DisplayNameFor(model => model.Grades.First().ExamPeriod.Period)</th>
+                <th>@Html.DisplayNameFor(model => model.Grades.First().ExamDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Grades.First().Secretary)</th>
+                <th>@Html.DisplayNameFor(model => model.Grades.First().EntryDate)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Grades)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course.Title)
+                    </td>
+                    <td>
+                        @if (item.Value == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @if (item.ExamPeriod == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.ExamPeriod.Period)
+                    </td>
+                    <td>
+                        @if (item.ExamDate == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.ExamDate)
+                    </td>
+                    <td>
+                        @if (item.Secretary == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.Secretary.FullName)
+                    </td>
+                    <td>
+                        @if (item.EntryDate == null)
+                        {
+                            @: ----
+                        }
+
+                        @Html.DisplayFor(modelItem => item.EntryDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#grades-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}

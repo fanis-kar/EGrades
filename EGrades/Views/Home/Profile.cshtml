@@ -1,0 +1,99 @@
+﻿@model EGrades.Models.ViewModels.StudentDetailsViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>@Model.Title</h1>
+
+<hr />
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.RegistrationNumber"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.RegistrationNumber" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.FullName"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.FullName" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.FatherName"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.FatherName" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Semester"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.Semester" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Direction"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Direction.Name" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.MotherName"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.MotherName" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Gender"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.Gender" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.Address"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.Address" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.BirthDate"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.BirthDate" disabled class="form-control" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-2">
+        <label asp-for="Student.EnrollmentDate"></label>
+    </div>
+    <div class="col-5">
+        <input asp-for="Student.EnrollmentDate" disabled class="form-control" />
+    </div>
+</div>

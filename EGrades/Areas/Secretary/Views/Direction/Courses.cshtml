@@ -1,0 +1,74 @@
+﻿@model EGrades.Models.ViewModels.DirectionCoursesViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>@Model.Title</h1>
+
+<hr />
+
+<a asp-controller="Direction" asp-action="Students" asp-route-id="@Model.Direction.Id">Λίστα Φοιτητών</a>
+
+<hr />
+
+<div class="table-responsive">
+    <table id="courses-list-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Semester)</th>
+                <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Type)</th>
+                <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().TotalHours)</th>
+                <th>@Html.DisplayNameFor(model => model.Courses.FirstOrDefault().Ects)</th>
+                <th>Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Courses)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ects)
+                    </td>
+                    <td>
+                        <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Id">Λεπτομέριες</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<a class="btn btn-primary" href="javascript:history.go(-1)" role="button">Πίσω</a>
+
+@section scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ListLayout");
+
+        <script>
+            $(document).ready(function () {
+                $('#courses-list-table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Greek.json"
+                    }
+                });
+            });
+        </script>
+    }
+}
